@@ -1,0 +1,22 @@
+# 小红书MCP 配置文件（示例）
+# 复制此文件为 config.yaml 并填入你的配置
+
+# 即梦图片生成 (jimeng-free-api)
+image_gen:
+  provider: "jimeng"
+  sessionid: "你的sessionid"  # 从jimeng.jianying.com cookies获取
+  api_base: "http://localhost:8000"
+  model: "jimeng-5.0"
+  default_ratio: "3:4"
+  default_resolution: "1k"
+
+# 小红书配置
+xiaohongshu:
+  cookie_file: "~/.redbook/cookies.json"
+
+# AI写作配置 (智谱AI)
+writer:
+  api_key: "你的智谱API Key"  # 从open.bigmodel.cn获取
+  model: "glm-4-plus"         # glm-4-flash免费 / glm-4-plus付费质量好
+  temperature: 0.95
+  max_tokens: 8192
