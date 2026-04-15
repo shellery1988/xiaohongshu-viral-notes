@@ -54,8 +54,8 @@ def main():
     parser.add_argument(
         "--images",
         type=int,
-        default=4,
-        help="图片数量（默认：4）"
+        default=1,
+        help="图片数量（默认：1张封面图）"
     )
     
     parser.add_argument(

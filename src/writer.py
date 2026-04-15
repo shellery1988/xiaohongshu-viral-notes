@@ -64,7 +64,7 @@ class XiaohongshuWriter:
         hot_posts: List[Dict],
         target_audience: str = "年轻女性",
         style: str = "干货分享",
-        image_count: int = 4,
+        image_count: int = 1,
         analysis: Optional[Dict] = None,
     ) -> Dict:
         """
@@ -133,7 +133,7 @@ class XiaohongshuWriter:
             keywords=keywords,
             target_audience=target_audience,
             style=style,
-            image_count=4,  # placeholder, not used in text prompt
+            image_count=1,  # placeholder, not used in text prompt
             analysis_summary=analysis_summary,
             hot_posts_examples=hot_posts_examples,
             title_insights=title_insights,
@@ -142,29 +142,31 @@ class XiaohongshuWriter:
             tag_insights=tag_insights,
         )
 
-    def _build_image_prompt(self, note: Dict, image_count: int = 4) -> str:
-        """构建图片描述生成提示词"""
+    def _build_image_prompt(self, note: Dict, image_count: int = 1) -> str:
+        """构建封面图描述生成提示词（单封面图模式，追求档次和质感）"""
         title = note.get("title", "")
         content = note.get("content", "")[:500]
         tags = note.get("tags", [])
 
-        return f"""根据以下小红书笔记，生成{image_count}张配图的描述和生图prompt。
+        return f"""根据以下小红书笔记，生成1张精品封面图的描述和生图prompt。
 
 笔记标题: {title}
 笔记内容摘要: {content}
 标签: {', '.join(tags[:5])}
 
-请输出JSON数组格式：
+请输出JSON数组（仅1项）：
 [
-  {{"index": 1, "description": "封面图：简短中文描述", "prompt": "英文生图prompt 30词内"}},
-  {{"index": 2, "description": "配图描述", "prompt": "英文prompt 30词内"}},
-  ...
+  {{"index": 1, "description": "封面图：简短中文描述", "prompt": "英文生图prompt 40词内"}}
 ]
 
-要求：
-- 封面图要能吸引点击，有标题文字排版空间
-- 风格统一：扁平化插画，明亮色彩，小红书爆款风格
-- 每个prompt控制在30个英文单词以内
+封面图设计要求：
+- 这是唯一的图片，必须足够吸引人点进来
+- 色彩明朗舒服、高级质感（莫兰迪色系/奶油色/暖杏色/浅灰蓝等）
+- 构图简洁大气，有留白和呼吸感，忌元素堆砌
+- 风格参考：杂志封面、Apple官网、MUJI海报
+- 光线自然柔和（暖调、柔光、自然光）
+- 最后必须带质量词：ultra high quality, 8k, sharp focus
+- prompt控制在40个英文单词以内
 - 直接输出JSON，不要代码块包裹"""
 
     def _call_llm_images(self, prompt: str) -> List[Dict]:
@@ -515,23 +517,8 @@ class XiaohongshuWriter:
             "images": [
                 {
                     "index": 1,
-                    "description": "封面图：现代简约办公桌面，5个AI工具logo展示",
-                    "prompt": "Modern minimalist office desk, laptop showing 5 AI tool icons, flat illustration, Xiaohongshu cover style, bright warm colors, clean background",
-                },
-                {
-                    "index": 2,
-                    "description": "ChatGPT使用界面",
-                    "prompt": "ChatGPT conversation interface showing high quality content generation, flat design, clean minimal, bright colors",
-                },
-                {
-                    "index": 3,
-                    "description": "效率对比图",
-                    "prompt": "Left right comparison, tired overtime work vs happy leaving on time, flat illustration, warm colors, Xiaohongshu style",
-                },
-                {
-                    "index": 4,
-                    "description": "工具推荐清单",
-                    "prompt": "Modern productivity tools list with icons, flat design, pastel colors, clean layout, Xiaohongshu style",
+                    "description": "封面图：温暖的办公桌面，笔记本和咖啡杯，自然阳光洒入，高级质感",
+                    "prompt": "minimal clean desk with laptop and coffee cup, warm morning sunlight, soft cream and sage green tones, editorial photography style, centered composition with negative space, natural warm lighting, ultra high quality, 8k, sharp focus, cozy aesthetic",
                 },
             ],
         }

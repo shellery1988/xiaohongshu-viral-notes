@@ -1,6 +1,6 @@
 ---
 name: xiaohongshu-viral-notes
-version: 2.1.0
+version: 2.2.0
 description: AI驱动的小红书爆款笔记自动化工具：搜索爆文 → 分析特征 → 智能写稿 → 省积分生图 → 发布草稿
 author: shellery1988
 license: MIT
@@ -14,7 +14,7 @@ AI驱动的小红书内容自动化工具，完整流水线覆盖从热点搜索
 
 - 🔍 **爆文分析引擎**：自动搜索同主题高赞文，分析标题/开头/结构/标签策略
 - 📝 **AI智能写稿**：基于竞品洞察生成有干货的笔记，遵循小红书爆文公式
-- 🎨 **省积分生图**：即梦AI每天66积分，每篇最多3张图，自动裁剪为标准尺寸
+- 🎨 **精品封面图**：即梦AI生成1张高品质封面，色彩明朗、质感高级、构图大气
 - 📤 **一键发布**：支持发布为草稿预览，确认后再公开
 
 ## 触发条件
@@ -91,7 +91,7 @@ result = pipeline.run(
     keywords="AI效率工具",
     target_audience="职场年轻人",
     style="干货安利",
-    image_count=3,
+    image_count=1,
     publish=False
 )
 ```
@@ -125,7 +125,7 @@ note = writer.generate_post(
     hot_posts=hot_posts,
     target_audience="职场年轻人",
     style="干货分享",
-    image_count=3,
+    image_count=1,
     analysis=analysis,
 )
 
@@ -146,8 +146,8 @@ publisher.publish_from_note(note, image_dir="output/images", save_as_draft=True)
 
 1. **搜索热点** → 通过 redbook-cli 搜索关键词，按热度排序
 2. **爆文分析** → 分析标题模式、开头钩子、内容结构、标签策略
-3. **AI撰写** → 基于分析结果 + 爆文参考，两阶段生成（先正文再配图描述）
-4. **生成配图** → 即梦AI生图，自动 9:16→3:4 裁剪为 1080x1440
+3. **AI撰写** → 基于分析结果 + 爆文参考，两阶段生成（先正文再封面图描述）
+4. **生成封面图** → 即梦AI生成1张精品封面，色彩明朗、质感高级，自动 9:16→3:4 裁剪为 1080x1440
 5. **发布草稿** → 通过 redbook-cli 发布到小红书草稿箱
 
 ## 内容质量铁律
@@ -157,7 +157,7 @@ publisher.publish_from_note(note, image_dir="output/images", save_as_draft=True)
 - 禁止编造数据
 - 必须有具体操作步骤（干货）
 - 必须有互动引导结尾
-- 每篇最多3张图（省积分）
+- 每篇仅1张封面图（精品策略，追求档次和质感）
 
 ## 文件结构
 

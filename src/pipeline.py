@@ -58,7 +58,7 @@ class XiaohongshuPipeline:
         keywords: str,
         target_audience: str = "年轻女性",
         style: str = "干货分享",
-        image_count: int = 3,
+        image_count: int = 1,
         publish: bool = False,
         save_as_draft: bool = True,
     ) -> Dict:
@@ -224,14 +224,12 @@ class XiaohongshuPipeline:
             }
 
     def _generate_images(self, note: Dict, output_dir: str) -> List[Dict]:
-        """生成配图（无描述时自动生成默认描述）"""
-        # 如果LLM没返回images，用默认描述（最多3张，省积分）
+        """生成封面图（无描述时自动生成默认描述，仅1张）"""
+        # 如果LLM没返回images，用默认封面描述
         if not note.get("images"):
             title = note.get("title", "小红书")[:15]
             note["images"] = [
-                {"index": 1, "description": f"封面图：{title}", "prompt": f"Clean dark background, centered white bold text '{title}', simple icon, minimal knowledge card style, professional"},
-                {"index": 2, "description": "核心技巧示意图", "prompt": "Terminal screenshot showing a config file, dark theme code editor, realistic developer workflow"},
-                {"index": 3, "description": "操作步骤图", "prompt": "Step by step guide with numbered boxes, clean minimal layout, dark background, knowledge card style"},
+                {"index": 1, "description": f"封面图：{title}", "prompt": f"minimal elegant scene related to '{title}', warm morning sunlight, soft cream and sage green tones, editorial photography style, centered composition with negative space, natural warm lighting, ultra high quality, 8k, sharp focus, cozy aesthetic"},
             ]
         try:
             return self.image_generator.generate_from_note(note, output_dir)
@@ -265,7 +263,7 @@ class XiaohongshuPipeline:
             keywords=keywords,
             target_audience="年轻女性",
             style="干货分享",
-            image_count=3,
+            image_count=1,
             publish=False,
         )
 

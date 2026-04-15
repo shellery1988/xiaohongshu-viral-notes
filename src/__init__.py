@@ -9,7 +9,7 @@ from .image_gen import JimengImageGenerator
 from .publisher import XiaohongshuPublisher
 from .pipeline import XiaohongshuPipeline
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 __all__ = [
     "XiaohongshuSearcher",
     "XiaohongshuWriter", 
